@@ -8,7 +8,7 @@ const Home = () => {
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
       <section className="text-center mb-20">
         <h1 className="font-playfair text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-          Software Engineer & Writer
+          Software Engineer
         </h1>
         <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
           I build exceptional websites, applications, and everything in between.
