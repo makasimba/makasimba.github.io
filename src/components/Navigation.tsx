@@ -9,7 +9,7 @@ const Navigation = () => {
         <div className="flex justify-between h-16">
           <div className="flex">
             <Link to="/" className="flex items-center font-playfair text-xl font-bold text-gray-900">
-              John Doe
+              Maka
             </Link>
           </div>
           <div className="hidden sm:flex sm:items-center sm:space-x-8">
