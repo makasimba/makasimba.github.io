@@ -5,17 +5,17 @@ import { Button } from '@/components/ui/button';
 
 const Home = () => {
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-      <section className="text-center mb-20">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <section className="text-center mb-5">
         <h1 className="font-playfair text-5xl md:text-6xl font-bold text-gray-900 mb-6">
           Software Engineer
         </h1>
-        <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-        I build software and write about AI, science, engineering, and ideas worth chasing. 
-        This site hosts my projects, writing, and research notes.
+        <p className="text-xl text-gray-600 mb-4 max-w-2xl mx-auto">
+          I build software and write about AI, science, engineering, and ideas worth chasing. 
+          This site hosts my projects, writing, and research notes.
         </p>
-        <div className="flex justify-center gap-4">
-          <Button asChild className="bg-purple-600 hover:bg-purple-700">
+        <div className="flex justify-center gap-2">
+          <Button asChild className="bg-green-600 hover:bg-green-700">
             <Link to="/blog">
               <BookOpen className="w-4 h-4 mr-2" />
               Read My Blog
@@ -34,10 +34,10 @@ const Home = () => {
         <div>
           <h2 className="font-playfair text-3xl font-bold mb-4">Side Posts</h2>
           <div className="space-y-4">
-            <article className="p-6 rounded-lg border border-gray-200 hover:border-purple-300 transition-colors">
-              <h3 className="font-bold text-xl mb-2">Understanding React Hooks</h3>
-              <p className="text-gray-600 mb-4">A deep dive into React's hooks system and how to use them effectively...</p>
-              <Link to="/blog" className="text-purple-600 hover:text-purple-700 font-medium">
+            <article className="p-6 rounded-lg border border-gray-200 hover:border-green-300 transition-colors">
+              <h3 className="font-bold text-xl mb-2">Optimizing Neural Networks Recursively</h3>
+              <p className="text-gray-600 mb-4">A deep dive into implementing forward and backward propagation.</p>
+              <Link to="/blog" className="text-green-600 hover:text-green-700 font-medium">
                 Read more →
               </Link>
             </article>
@@ -46,10 +46,10 @@ const Home = () => {
         <div>
           <h2 className="font-playfair text-3xl font-bold mb-4">Side Projects</h2>
           <div className="space-y-4">
-            <article className="p-6 rounded-lg border border-gray-200 hover:border-purple-300 transition-colors">
+            <article className="p-6 rounded-lg border border-gray-200 hover:border-green-300 transition-colors">
               <h3 className="font-bold text-xl mb-2">Online Store App</h3>
               <p className="text-gray-600 mb-4">A full-stack application built with React and Node.js for empowering small-scale subsaharan farmers...</p>
-              <Link to="/projects" className="text-purple-600 hover:text-purple-700 font-medium">
+              <Link to="/projects" className="text-green-600 hover:text-green-700 font-medium">
                 View project →
               </Link>
             </article>
