@@ -32,7 +32,7 @@ const Home = () => {
 
       <section className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-20">
         <div>
-          <h2 className="font-playfair text-3xl font-bold mb-4">Latest Posts</h2>
+          <h2 className="font-playfair text-3xl font-bold mb-4">Side Posts</h2>
           <div className="space-y-4">
             <article className="p-6 rounded-lg border border-gray-200 hover:border-purple-300 transition-colors">
               <h3 className="font-bold text-xl mb-2">Understanding React Hooks</h3>
@@ -44,11 +44,11 @@ const Home = () => {
           </div>
         </div>
         <div>
-          <h2 className="font-playfair text-3xl font-bold mb-4">Featured Projects</h2>
+          <h2 className="font-playfair text-3xl font-bold mb-4">Side Projects</h2>
           <div className="space-y-4">
             <article className="p-6 rounded-lg border border-gray-200 hover:border-purple-300 transition-colors">
-              <h3 className="font-bold text-xl mb-2">Project Manager App</h3>
-              <p className="text-gray-600 mb-4">A full-stack application built with React and Node.js for managing projects...</p>
+              <h3 className="font-bold text-xl mb-2">Online Store App</h3>
+              <p className="text-gray-600 mb-4">A full-stack application built with React and Node.js for empowering small-scale subsaharan farmers...</p>
               <Link to="/projects" className="text-purple-600 hover:text-purple-700 font-medium">
                 View project →
               </Link>
