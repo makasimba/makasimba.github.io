@@ -9,7 +9,9 @@ const Navigation = () => {
         <div className="flex justify-between h-16">
           <div className="flex">
             <Link to="/" className="flex items-center font-playfair text-xl font-bold text-gray-900">
-              Maka
+              <img src="profile-avatar.png" alt="Avatar" className="w-8 h-8"/>
+              <h2 className="px-2 text-gray-900">Maka</h2>
+              <img src="verification-symbol.svg" alt="verification symbol" className="w-5 h-5" />
             </Link>
           </div>
           <div className="hidden sm:flex sm:items-center sm:space-x-8">

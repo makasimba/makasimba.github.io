@@ -11,7 +11,7 @@ const Home = () => {
           Software Engineer
         </h1>
         <p className="text-xl text-gray-600 mb-4 max-w-2xl mx-auto">
-          I build software and write about AI, science, engineering, and ideas worth chasing. 
+          I build software and write about AI, science, and ideas worth chasing. 
           This site hosts my projects, writing, and research notes.
         </p>
         <div className="flex justify-center gap-2">
