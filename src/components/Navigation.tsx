@@ -10,13 +10,11 @@ const Navigation = () => {
           <div className="flex">
             <Link to="/" className="flex items-center font-playfair text-xl font-bold text-gray-900">
               <img src="profile-avatar.png" alt="Avatar" className="w-8 h-8"/>
-              <h2 className="px-2 text-gray-900">Maka</h2>
-              <img src="verification-symbol.svg" alt="verification symbol" className="w-5 h-5" />
             </Link>
           </div>
           <div className="hidden sm:flex sm:items-center sm:space-x-8">
             <NavLink to="/" icon={<Home className="w-4 h-4" />} text="Home" />
-            <NavLink to="/blog" icon={<BookOpen className="w-4 h-4" />} text="Blog" />
+            <NavLink to="/blog" icon={<BookOpen className="w-4 h-4" />} text="Posts" />
             <NavLink to="/projects" icon={<Archive className="w-4 h-4" />} text="Projects" />
             <NavLink to="/about" icon={<User className="w-4 h-4" />} text="About" />
           </div>
@@ -29,7 +27,7 @@ const Navigation = () => {
 const NavLink = ({ to, icon, text }: { to: string; icon: React.ReactNode; text: string }) => (
   <Link
     to={to}
-    className="flex items-center space-x-1 text-gray-600 hover:text-purple-600 transition-colors"
+    className="flex items-center space-x-1 text-gray-600 hover:text-sky-600 transition-colors"
   >
     {icon}
     <span>{text}</span>
