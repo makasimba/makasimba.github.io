@@ -25,28 +25,35 @@ const Projects = () => {
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
       <div className="flex items-center justify-between mb-12">
         <h1 className="font-playfair text-5xl font-bold text-gray-900">Projects</h1>
-        <div className="text-gray-500 flex items-center gap-2">
-          <Archive className="w-5 h-5" />
-          <span>{projects.length} {projects.length === 1 ? 'project' : 'projects'}</span>
-        </div>
       </div>
 
       {projects.length === 0 ? (
-        <Card className="border-dashed">
-          <CardHeader>
-            <CardTitle className="text-xl">No projects yet</CardTitle>
-            <CardDescription>
-              Add markdown files to <code className="px-1 py-0.5 bg-gray-100 rounded">src/pages/projects</code> (or <code className="px-1 py-0.5 bg-gray-100 rounded">src/projects</code>) and they will appear here.
-            </CardDescription>
-          </CardHeader>
-        </Card>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {projects.map((proj) => (
+          <Card key={proj.href} className="group hover:shadow-md transition-shadow">
+            <CardHeader>
+              <CardTitle className="text-xl line-clamp-2">{proj.title}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <Link
+                to={proj.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center text-sky-700 hover:text-sky-800 font-medium"
+              >
+                View project
+                <ArrowUpRight className="w-4 h-4 ml-1" />
+              </Link>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((proj) => (
             <Card key={proj.href} className="group hover:shadow-md transition-shadow">
               <CardHeader>
                 <CardTitle className="text-xl line-clamp-2">{proj.title}</CardTitle>
-                <CardDescription>Markdown project</CardDescription>
               </CardHeader>
               <CardContent>
                 <Link

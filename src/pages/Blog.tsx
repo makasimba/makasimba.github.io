@@ -23,10 +23,6 @@ const Blog = () => {
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
       <div className="flex items-center justify-between mb-12">
         <h1 className="font-playfair text-5xl font-bold text-gray-900">Blog</h1>
-        <div className="text-gray-500 flex items-center gap-2">
-          <BookOpen className="w-5 h-5" />
-          <span>{posts.length} {posts.length === 1 ? 'post' : 'posts'}</span>
-        </div>
       </div>
 
       {posts.length === 0 ? (
@@ -44,18 +40,8 @@ const Blog = () => {
             <Card key={post.href} className="group hover:shadow-md transition-shadow">
               <CardHeader>
                 <CardTitle className="text-xl line-clamp-2">{post.title}</CardTitle>
-                <CardDescription>Markdown article</CardDescription>
               </CardHeader>
               <CardContent>
-                <Link
-                  to={post.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center text-sky-700 hover:text-sky-800 font-medium"
-                >
-                  Read post
-                  <ArrowUpRight className="w-4 h-4 ml-1" />
-                </Link>
               </CardContent>
             </Card>
           ))}
