@@ -12,7 +12,7 @@ const Home = () => {
         </h1>
         <p className="text-xl text-gray-600 mb-4 max-w-2xl mx-auto">
           I build software and write about AI, science, and ideas worth chasing. 
-          This site hosts my projects, writing, and research notes.
+          This site hosts my projects, and posts.
         </p>
         <div className="flex justify-center gap-2">
           <Button asChild className="bg-sky-600 hover:bg-sky-700">
@@ -45,7 +45,7 @@ const Home = () => {
           <div className="space-y-4">
             <article className="p-6 rounded-lg border border-gray-200 hover:border-sky-300 transition-colors">
               <h3 className="font-bold text-xl mb-2">Online Store App</h3>
-              <p className="text-gray-600 mb-4">An app for empowering small-scale sub-saharan farmers.</p>
+              <p className="text-gray-600 mb-4">An app for empowering small-scale sub-saharan farmers like myself.</p>
             </article>
           </div>
         </div>
