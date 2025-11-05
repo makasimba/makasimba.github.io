@@ -14,8 +14,6 @@ const Navigation = () => {
           </div>
           <div className="hidden sm:flex sm:items-center sm:space-x-8">
             <NavLink to="/" icon={<Home className="w-4 h-4" />} text="Home" />
-            <NavLink to="/blog" icon={<BookOpen className="w-4 h-4" />} text="Posts" />
-            <NavLink to="/projects" icon={<Archive className="w-4 h-4" />} text="Projects" />
             <NavLink to="/about" icon={<User className="w-4 h-4" />} text="About" />
           </div>
         </div>

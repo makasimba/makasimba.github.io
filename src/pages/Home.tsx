@@ -18,7 +18,7 @@ const Home = () => {
           <Button asChild className="bg-sky-600 hover:bg-sky-700">
             <Link to="/blog">
               <BookOpen className="w-4 h-4 mr-2" />
-              Read My Blog
+              Read My Posts
             </Link>
           </Button>
           <Button asChild variant="outline">
@@ -37,9 +37,6 @@ const Home = () => {
             <article className="p-6 rounded-lg border border-gray-200 hover:border-sky-300 transition-colors">
               <h3 className="font-bold text-xl mb-2">Optimizing Neural Networks Recursively</h3>
               <p className="text-gray-600 mb-4">A deep dive into implementing forward and backward propagation.</p>
-              <Link to="/blog" className="text-sky-600 hover:text-sky-700 font-medium">
-                Read more →
-              </Link>
             </article>
           </div>
         </div>
@@ -48,10 +45,7 @@ const Home = () => {
           <div className="space-y-4">
             <article className="p-6 rounded-lg border border-gray-200 hover:border-sky-300 transition-colors">
               <h3 className="font-bold text-xl mb-2">Online Store App</h3>
-              <p className="text-gray-600 mb-4">A full-stack application built with React and Node.js for empowering small-scale subsaharan farmers...</p>
-              <Link to="/projects" className="text-sky-600 hover:text-sky-700 font-medium">
-                View project →
-              </Link>
+              <p className="text-gray-600 mb-4">An app for empowering small-scale sub-saharan farmers.</p>
             </article>
           </div>
         </div>
