@@ -288,14 +288,14 @@ And in the end, that might be more valuable.
 
 ## Resources
 
-**💻 Code:** The full implementation is available [on GitHub](https://github.com/makasimba/Optimization-With-Recursion). It includes:
+**Code:** The full implementation is available [on GitHub](https://github.com/makasimba/Optimization-With-Recursion). It includes:
 - The recursive implementation with proper type hints
 - A toy data set to play with
 - Comparison benchmarks against standard approaches
 - A simple binary classification example
 - Tests verifying gradient correctness
 
-**📚 Further Reading:**
+**Further Reading:**
 - [Backpropagation calculus (3Blue1Brown)](https://www.youtube.com/watch?v=tIeHLnjs5U8) — Visual intuition for the math
 - [Yes you should understand backprop (Karpathy)](https://karpathy.medium.com/yes-you-should-understand-backprop-e2f06eab496b) — Why understanding matters
 - [Original DL.AI post](https://community.deeplearning.ai/t/neural-network-optimization-with-recursion/264465) — Where this idea first took shape
