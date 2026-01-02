@@ -240,6 +240,7 @@ Also, [yes you should understand backprop (Karpathy)](https://karpathy.medium.co
 **Further Reading:**
 - [Backpropagation calculus (3Blue1Brown)](https://www.youtube.com/watch?v=tIeHLnjs5U8)
 - [Yes you should understand backprop (Karpathy)](https://karpathy.medium.com/yes-you-should-understand-backprop-e2f06eab496b)
+- [Original DL.AI post](https://community.deeplearning.ai/t/neural-network-optimization-with-recursion/264465)
 
 *Thanks for reading. If you found this interesting, you might also like my posts on [Github](https://makasimba.github.io/). Feel free to reach out on [LinkedIn](https://www.linkedin.com/in/makasimba/) or [X](https://x.com/__Makaa) if you have thoughts or questions.*
 
