@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { useEffect, useState } from 'react';
-import matter from 'gray-matter';
 
 type PostItem = {
   title: string;
@@ -12,7 +11,7 @@ type PostItem = {
 
 function getSlugFromPath(path: string): string {
   const file = path.split('/').pop() || path;
-  return file.replace(/\.md$/i, '');
+  return file.replace(/\.html$/i, '');
 }
 
 const Blog = () => {
@@ -22,18 +21,34 @@ const Blog = () => {
   useEffect(() => {
     const loadPosts = async () => {
       try {
-        // Get all markdown files
-        const postModules = import.meta.glob('/src/pages/posts/*.md', { as: 'raw', eager: true }) as Record<string, string>;
+        // Get all HTML files
+        const postModules = import.meta.glob('/src/pages/posts/*.html', { as: 'raw', eager: true }) as Record<string, string>;
         
         const postsList: PostItem[] = await Promise.all(
-          Object.entries(postModules).map(async ([path, content]) => {
+          Object.entries(postModules).map(async ([path, htmlContent]) => {
             const slug = getSlugFromPath(path);
-            const { data } = matter(content);
+            
+            // Parse HTML to extract metadata
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(htmlContent, 'text/html');
+            
+            // Extract metadata from JSON script tag
+            const metadataScript = doc.getElementById('post-metadata');
+            let metadata: any = {};
+            
+            if (metadataScript && metadataScript.textContent) {
+              try {
+                metadata = JSON.parse(metadataScript.textContent);
+              } catch (e) {
+                console.error('Error parsing metadata for', slug, e);
+              }
+            }
+            
             return {
-              title: (data.title as string) || slug,
+              title: (metadata.title as string) || slug,
               slug,
-              date: data.date as string,
-              description: data.description as string,
+              date: metadata.date as string,
+              description: metadata.description as string,
             };
           })
         );
@@ -70,7 +85,7 @@ const Blog = () => {
           <CardHeader>
             <CardTitle className="text-xl">No posts yet</CardTitle>
             <CardDescription>
-              Add markdown files to <code className="px-1 py-0.5 bg-gray-100 rounded">src/pages/posts</code> and they will appear here.
+              Add HTML files to <code className="px-1 py-0.5 bg-gray-100 rounded">src/pages/posts</code> and they will appear here.
             </CardDescription>
           </CardHeader>
         </Card>
