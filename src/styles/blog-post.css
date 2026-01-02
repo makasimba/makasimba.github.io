@@ -1,0 +1,235 @@
+/* Karpathy-style blog post typography and layout */
+
+.blog-post-container {
+  @apply bg-white;
+  min-height: 100vh;
+  padding: 2rem 1rem;
+}
+
+/* Typography - Serif body, sans-serif headings */
+.blog-post-content {
+  max-width: 750px;
+  margin: 0 auto;
+  padding: 0;
+  font-family: "Lora", "Palatino Linotype", "Book Antiqua", Palatino, serif;
+  font-size: 20px;
+  line-height: 1.7;
+  color: #333;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Back link styling */
+.blog-post-back-link {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 0.9rem;
+  display: inline-block;
+  margin-bottom: 2rem;
+  color: #666;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.blog-post-back-link:hover {
+  color: #333;
+}
+
+/* Header */
+.blog-post-title {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #333;
+  margin-bottom: 1rem;
+  margin-top: 0;
+}
+
+.blog-post-date {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 0.95rem;
+  color: #666;
+  font-weight: 400;
+  display: block;
+  margin-bottom: 3rem;
+}
+
+/* Headings */
+.blog-post-h1,
+.blog-post-h2,
+.blog-post-h3,
+.blog-post-h4 {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  color: #333;
+  margin-top: 2em;
+  margin-bottom: 0.5em;
+}
+
+.blog-post-h1 {
+  font-size: 2rem;
+  margin-top: 2.5em;
+}
+
+.blog-post-h2 {
+  font-size: 1.75rem;
+  margin-top: 2em;
+  padding-top: 0.5em;
+}
+
+.blog-post-h3 {
+  font-size: 1.5rem;
+  margin-top: 1.5em;
+}
+
+.blog-post-h4 {
+  font-size: 1.25rem;
+  margin-top: 1.5em;
+}
+
+/* Paragraphs */
+.blog-post-p {
+  margin-bottom: 1.5em;
+  line-height: 1.7;
+  color: #333;
+}
+
+/* Lists */
+.blog-post-ul,
+.blog-post-ol {
+  margin-bottom: 1.5em;
+  padding-left: 2em;
+  line-height: 1.7;
+}
+
+.blog-post-li {
+  margin-bottom: 0.5em;
+  line-height: 1.7;
+}
+
+.blog-post-ul {
+  list-style-type: disc;
+}
+
+.blog-post-ol {
+  list-style-type: decimal;
+}
+
+/* Blockquotes */
+.blog-post-blockquote {
+  margin: 2em 0;
+  padding-left: 1.5em;
+  border-left: 4px solid #ddd;
+  color: #555;
+  font-style: italic;
+  line-height: 1.7;
+}
+
+.blog-post-blockquote p {
+  margin-bottom: 1em;
+}
+
+.blog-post-blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+/* Code */
+.blog-post-inline-code {
+  background-color: #f5f5f5;
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+  font-family: "Consolas", "Monaco", "Courier New", monospace;
+  font-size: 0.9em;
+  color: #d14;
+}
+
+.blog-post-pre {
+  background-color: #f8f8f8;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  padding: 1.2em;
+  margin: 2em 0;
+  overflow-x: auto;
+  font-family: "Consolas", "Monaco", "Courier New", monospace;
+  font-size: 0.9em;
+  line-height: 1.6;
+}
+
+.blog-post-code {
+  display: block;
+  background-color: #f8f8f8;
+  padding: 1.2em;
+  border-radius: 4px;
+  overflow-x: auto;
+  font-family: "Consolas", "Monaco", "Courier New", monospace;
+  font-size: 0.9em;
+  line-height: 1.6;
+  color: #333;
+}
+
+.blog-post-pre code,
+.blog-post-code code {
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  color: inherit;
+}
+
+/* Links */
+.blog-post-link {
+  color: #0066cc;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+
+.blog-post-link:hover {
+  border-bottom-color: #0066cc;
+}
+
+/* Horizontal rule */
+.blog-post-hr {
+  border: none;
+  border-top: 1px solid #e0e0e0;
+  margin: 3em 0;
+}
+
+/* Images */
+.blog-post-img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 2rem auto;
+  border-radius: 4px;
+}
+
+/* Text formatting within paragraphs */
+.blog-post-content strong {
+  font-weight: 700;
+  color: #333;
+}
+
+.blog-post-content em {
+  font-style: italic;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .blog-post-content {
+    font-size: 18px;
+    padding: 0 1rem;
+  }
+
+  .blog-post-title {
+    font-size: 2rem;
+  }
+
+  .blog-post-h1 {
+    font-size: 1.75rem;
+  }
+
+  .blog-post-h2 {
+    font-size: 1.5rem;
+  }
+}
+
