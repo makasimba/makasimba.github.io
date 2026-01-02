@@ -1,5 +1,3 @@
-import { Link } from 'react-router-dom';
-import { BookOpen, ArrowUpRight } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 
 type PostItem = {
@@ -37,13 +35,19 @@ const Blog = () => {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {posts.map((post) => (
-            <Card key={post.href} className="group hover:shadow-md transition-shadow">
-              <CardHeader>
-                <CardTitle className="text-xl line-clamp-2">{post.title}</CardTitle>
-              </CardHeader>
-              <CardContent>
-              </CardContent>
-            </Card>
+            <a
+              key={post.href}
+              href={post.href}
+              className="block"
+            >
+              <Card className="group hover:shadow-md transition-shadow cursor-pointer">
+                <CardHeader>
+                  <CardTitle className="text-xl line-clamp-2">{post.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                </CardContent>
+              </Card>
+            </a>
           ))}
         </div>
       )}

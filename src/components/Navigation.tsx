@@ -1,6 +1,6 @@
 
 import { Link } from 'react-router-dom';
-import { Home, BookOpen, User, Archive } from 'lucide-react';
+import { User } from 'lucide-react';
 
 const Navigation = () => {
   return (
@@ -13,7 +13,6 @@ const Navigation = () => {
             </Link>
           </div>
           <div className="hidden sm:flex sm:items-center sm:space-x-8">
-            <NavLink to="/" icon={<Home className="w-4 h-4" />} text="Home" />
             <NavLink to="/about" icon={<User className="w-4 h-4" />} text="About" />
           </div>
         </div>
