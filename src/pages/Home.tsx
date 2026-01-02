@@ -4,8 +4,6 @@ import { BookOpen, Archive } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const Home = () => {
-  const postFiles = import.meta.glob('/src/pages/posts/*.md', { as: 'url', eager: true }) as Record<string, string>;
-  const nnPostHref = postFiles['/src/pages/posts/recursively-optimizing-neural-networks.md'];
   const projectsFromSrc = import.meta.glob('/src/pages/projects/*.md', { as: 'url', eager: true }) as Record<string, string>;
   const projectsFromAlt = import.meta.glob('/src/projects/*.md', { as: 'url', eager: true }) as Record<string, string>;
   const projectHref = Object.values({ ...projectsFromSrc, ...projectsFromAlt })[0] || '/projects';
@@ -39,15 +37,13 @@ const Home = () => {
         <div>
           <h2 className="font-playfair text-3xl font-bold mb-4">Side Posts</h2>
           <div className="space-y-4">
-            <a
-              href={nnPostHref}
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              to="/blog/recursively-optimizing-neural-networks"
               className="block p-6 rounded-lg border border-gray-200 hover:border-sky-300 transition-colors cursor-pointer"
             >
-              <h3 className="font-bold text-xl mb-2">Optimizing Neural Networks Recursively</h3>
-              <p className="text-gray-600 mb-4">A deep dive into implementing forward and backward propagation.</p>
-            </a>
+              <h3 className="font-bold text-xl mb-2">Neural Networks from Scratch: A Recursive Meditation</h3>
+              <p className="text-gray-600 mb-4">Exploring a recursive approach in neural network optimization.</p>
+            </Link>
           </div>
         </div>
         <div>

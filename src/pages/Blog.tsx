@@ -1,21 +1,61 @@
+import { Link } from 'react-router-dom';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
+import { useEffect, useState } from 'react';
+import matter from 'gray-matter';
 
 type PostItem = {
   title: string;
-  href: string;
+  slug: string;
+  date?: string;
+  description?: string;
 };
 
-function formatTitleFromPath(path: string): string {
+function getSlugFromPath(path: string): string {
   const file = path.split('/').pop() || path;
-  const name = file.replace(/\.md$/i, '').replace(/[-_]+/g, ' ');
-  return name.charAt(0).toUpperCase() + name.slice(1);
+  return file.replace(/\.md$/i, '');
 }
 
 const Blog = () => {
-  const postFiles = import.meta.glob('/src/pages/posts/*.md', { as: 'url', eager: true }) as Record<string, string>;
-  const posts: PostItem[] = Object.entries(postFiles)
-    .map(([path, href]) => ({ title: formatTitleFromPath(path), href }))
-    .sort((a, b) => a.title.localeCompare(b.title));
+  const [posts, setPosts] = useState<PostItem[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadPosts = async () => {
+      try {
+        // Get all markdown files
+        const postModules = import.meta.glob('/src/pages/posts/*.md', { as: 'raw', eager: true }) as Record<string, string>;
+        
+        const postsList: PostItem[] = await Promise.all(
+          Object.entries(postModules).map(async ([path, content]) => {
+            const slug = getSlugFromPath(path);
+            const { data } = matter(content);
+            return {
+              title: (data.title as string) || slug,
+              slug,
+              date: data.date as string,
+              description: data.description as string,
+            };
+          })
+        );
+
+        // Sort by date (newest first)
+        postsList.sort((a, b) => {
+          if (a.date && b.date) {
+            return new Date(b.date).getTime() - new Date(a.date).getTime();
+          }
+          return 0;
+        });
+
+        setPosts(postsList);
+      } catch (error) {
+        console.error('Error loading posts:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadPosts();
+  }, []);
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
@@ -23,7 +63,9 @@ const Blog = () => {
         <h1 className="font-playfair text-5xl font-bold text-gray-900">Blog</h1>
       </div>
 
-      {posts.length === 0 ? (
+      {loading ? (
+        <div className="text-center text-gray-600">Loading posts...</div>
+      ) : posts.length === 0 ? (
         <Card className="border-dashed">
           <CardHeader>
             <CardTitle className="text-xl">No posts yet</CardTitle>
@@ -35,19 +77,27 @@ const Blog = () => {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {posts.map((post) => (
-            <a
-              key={post.href}
-              href={post.href}
+            <Link
+              key={post.slug}
+              to={`/blog/${post.slug}`}
               className="block"
             >
-              <Card className="group hover:shadow-md transition-shadow cursor-pointer">
+              <Card className="group hover:shadow-md transition-shadow cursor-pointer h-full">
                 <CardHeader>
                   <CardTitle className="text-xl line-clamp-2">{post.title}</CardTitle>
+                  {post.description && (
+                    <CardDescription className="line-clamp-2 mt-2">
+                      {post.description}
+                    </CardDescription>
+                  )}
+                  {post.date && (
+                    <CardDescription className="mt-2 text-xs">
+                      {new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                    </CardDescription>
+                  )}
                 </CardHeader>
-                <CardContent>
-                </CardContent>
               </Card>
-            </a>
+            </Link>
           ))}
         </div>
       )}
