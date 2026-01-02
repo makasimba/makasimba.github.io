@@ -241,5 +241,5 @@ Also, [yes you should understand backprop (Karpathy)](https://karpathy.medium.co
 - [Backpropagation calculus (3Blue1Brown)](https://www.youtube.com/watch?v=tIeHLnjs5U8)
 - [Yes you should understand backprop (Karpathy)](https://karpathy.medium.com/yes-you-should-understand-backprop-e2f06eab496b)
 
-*Thanks for reading. If you found this interesting, you might also like my posts on [https://makasimba.github.io/]. Feel free to reach out on [https://www.linkedin.com/in/makasimba/] or [https://x.com/__Makaa] if you have thoughts or questions.*
+*Thanks for reading. If you found this interesting, you might also like my posts on [Github](https://makasimba.github.io/). Feel free to reach out on [LinkedIn](https://www.linkedin.com/in/makasimba/) or [X](https://x.com/__Makaa) if you have thoughts or questions.*
 
