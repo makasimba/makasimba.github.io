@@ -144,7 +144,7 @@ The standard implementation in my original code was about 200 lines. The recursi
 Let me walk through exactly what's happening with a simple 2-layer network. Say we have input X, and layers W1, W2.
 
 **Going down (forward pass):**
-```
+```text
 Call 1: forward_and_backward(X, Y, params, config, layer=1)
   - Compute Z1 = W1 @ X + b1
   - Compute A1 = relu(Z1)
@@ -161,7 +161,7 @@ Call 1: forward_and_backward(X, Y, params, config, layer=1)
 ```
 
 **Coming back up (backward pass):**
-```
+```text
     Call 2 resumes:
       - Still has A1, W2, b2, Z2 in scope
       - Computes dZ2, dW2, db2, dA1
@@ -181,7 +181,7 @@ The call stack gave us exactly what we needed, exactly when we needed it.
 
 I ran benchmarks comparing this to the standard implementation. On a simple binary classification task with 1,372 samples:
 
-```
+```text
 Standard implementation:  2.1s ± 100ms
 Recursive implementation: 2.2s ± 95ms
 ```
