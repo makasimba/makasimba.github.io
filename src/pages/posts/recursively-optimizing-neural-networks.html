@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Exploring a recursive approach in neural network optimization.">
+    <title>Neural Networks from Scratch: A Recursive Meditation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #2d3748;
+            --text-secondary: #4a5568;
+            --accent-color: #3182ce;
+            --accent-hover: #2c5aa0;
+            --code-bg: #1e1e1e;
+            --code-text: #d4d4d4;
+            --border-color: #e2e8f0;
+            --quote-bg: #f7fafc;
+            --quote-border: #cbd5e0;
+            --hr-color: #e2e8f0;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #1a202c;
+                --text-color: #e2e8f0;
+                --text-secondary: #cbd5e0;
+                --accent-color: #63b3ed;
+                --accent-hover: #90cdf4;
+                --code-bg: #2d3748;
+                --code-text: #e2e8f0;
+                --border-color: #4a5568;
+                --quote-bg: #2d3748;
+                --quote-border: #4a5568;
+                --hr-color: #4a5568;
+            }
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+            line-height: 1.7;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            padding: 0;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        header {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            font-style: italic;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-top: 1rem;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .tag {
+            background-color: var(--quote-bg);
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.85rem;
+            border: 1px solid var(--border-color);
+        }
+
+        h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-color);
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+            color: var(--text-color);
+        }
+
+        a {
+            color: var(--accent-color);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s;
+        }
+
+        a:hover {
+            border-bottom-color: var(--accent-color);
+        }
+
+        blockquote {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background-color: var(--quote-bg);
+            border-left: 4px solid var(--quote-border);
+            border-radius: 4px;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
+        blockquote p {
+            margin-bottom: 0.5rem;
+        }
+
+        blockquote p:last-child {
+            margin-bottom: 0;
+        }
+
+        blockquote strong {
+            color: var(--text-color);
+            font-style: normal;
+        }
+
+        hr {
+            border: none;
+            border-top: 2px solid var(--hr-color);
+            margin: 3rem 0;
+        }
+
+        ul, ol {
+            margin-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        li {
+            margin-bottom: 0.75rem;
+            color: var(--text-color);
+        }
+
+        code {
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+            background-color: var(--quote-bg);
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            color: var(--accent-color);
+        }
+
+        pre {
+            background-color: var(--code-bg);
+            border-radius: 8px;
+            padding: 1.5rem;
+            overflow-x: auto;
+            margin: 2rem 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        pre code {
+            background-color: transparent;
+            padding: 0;
+            color: var(--code-text);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .code-block {
+            position: relative;
+        }
+
+        .code-block::before {
+            content: attr(data-language);
+            position: absolute;
+            top: 0.5rem;
+            right: 1rem;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        strong {
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        em {
+            font-style: italic;
+        }
+
+        .resources {
+            background-color: var(--quote-bg);
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 3rem 0;
+        }
+
+        .resources h2 {
+            margin-top: 0;
+            border-bottom: none;
+        }
+
+        .footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 2px solid var(--border-color);
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.75rem;
+            }
+
+            h3 {
+                font-size: 1.25rem;
+            }
+
+            pre {
+                padding: 1rem;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Neural Networks from Scratch: A Recursive Meditation</h1>
+            <p class="subtitle">Or: How I learned to stop worrying and love the call stack</p>
+            <div class="meta">
+                <span>Published: January 1, 2024</span>
+                <div class="tags">
+                    <span class="tag">AI</span>
+                    <span class="tag">Neural Networks</span>
+                    <span class="tag">Optimization</span>
+                </div>
+            </div>
+        </header>
+
+        <article>
+            <p>A couple years ago, I took <a href="https://www.deeplearning.ai/courses/deep-learning-specialization/">Andrew Ng's Deep Learning Specialization</a>. Like many others, I diligently implemented the assignments, writing out the forward pass, carefully constructing my cache dictionaries, then unwinding everything in the backward pass. It worked. It made sense. But something bothered me.</p>
+
+            <blockquote>
+                <p><strong>Why all these caches?</strong></p>
+            </blockquote>
+
+            <p>We're essentially doing two things: going forward through the network, then going backward. But we're maintaining these explicit data structures—dictionaries, lists, tuples—to store intermediate values. It felt... inelegant. Like we were fighting against the natural structure of the computation.</p>
+
+            <p>Then I had a realization that changed how I think about algorithms:</p>
+
+            <blockquote>
+                <p><strong>The call stack is already a cache.</strong></p>
+            </blockquote>
+
+            <p>What if we just used recursion? At the time I was a third-year chemistry undergraduate, deep in thermodynamics coursework, and didn't have the time to implement the idea properly. A year later, I was able to do it justice, as you'll see below.</p>
+
+            <hr>
+
+            <h2>The Standard Approach (What Everyone Teaches)</h2>
+
+            <p>Let me show you the typical implementation first. Here's what you'd write after taking most DL courses—the "textbook" way:</p>
+
+            <pre><code class="language-python">def forward_propagation(X, parameters):
+    caches = []
+    A = X
+    L = len(parameters) // 2
+    
+    for l in range(1, L):
+        A_prev = A
+        W = parameters[f'W{l}']
+        b = parameters[f'b{l}']
+        Z = W @ A_prev + b
+        A = relu(Z)
+        caches.append((A_prev, W, b, Z))  # Store for backward pass
+    
+    # Output layer
+    W = parameters[f'W{L}']
+    b = parameters[f'b{L}']
+    Z = W @ A + b
+    AL = sigmoid(Z)
+    caches.append((A, W, b, Z))
+    
+    return AL, caches
+
+def backward_propagation(AL, Y, caches):
+    grads = {}
+    L = len(caches)
+    m = AL.shape[1]
+    
+    # Initialize backward propagation
+    dAL = -(Y / AL - (1 - Y) / (1 - AL))
+    
+    # Unwind through cached values
+    for l in reversed(range(L)):
+        current_cache = caches[l]
+        # ... gradient calculations ...
+    
+    return grads</code></pre>
+
+            <p>Notice the pattern: the forward pass builds a cache, and the backward pass consumes it.</p>
+
+            <p>It's like we're manually implementing what a recursive call stack would give us for free.</p>
+
+            <p>This explicit cache management works, but it's verbose. It separates concerns that are fundamentally linked. What if we could eliminate the cache entirely?</p>
+
+            <hr>
+
+            <h2>The Recursive Insight</h2>
+
+            <p>Here's the key observation that started everything:</p>
+
+            <blockquote>
+                <p>In backpropagation, we need access to values from the forward pass <strong>in reverse order</strong>. That's literally what a call stack does—last in, first out (LIFO).</p>
+            </blockquote>
+
+            <p>Consider this: when you write a recursive function, each function call creates a stack frame containing its local variables. When the recursion unwinds, you traverse these frames in reverse order. Sound familiar?</p>
+
+            <p>The call stack is the cache. We just need to use it.</p>
+
+            <p>Let me show you what this looks like:</p>
+
+            <pre><code class="language-python">def forward_and_backward_recursive(A_prev, Y, parameters, config, layer=1):
+    L = config.num_layers
+    m = Y.shape[1]
+    
+    # Base case: reached the end of the network
+    if layer > L:
+        cost = compute_cost(A_prev, Y)
+        dAL = -(Y / A_prev - (1 - Y) / (1 - A_prev))
+        return cost, dAL
+    
+    # Forward propagation (going down)
+    W = parameters[f'W{layer}']
+    b = parameters[f'b{layer}']
+    Z = W @ A_prev + b
+    
+    if layer == L:
+        A = sigmoid(Z)  # Output layer uses sigmoid
+    else:
+        A = relu(Z)     # Hidden layers use ReLU
+    
+    # Recursive call: go deeper into the network
+    # This pushes a new frame onto the stack with W, b, Z, A_prev
+    cost, dA = forward_and_backward_recursive(A, Y, parameters, config, layer + 1)
+    
+    # Backward pass: coming back up
+    # W, b, Z, A_prev are still in scope from the forward pass
+    # No cache needed—the call stack preserved them for us
+    if layer == L:
+        dZ = dA * sigmoid_grad(Z)
+    else:
+        dZ = dA * relu_grad(Z)
+    
+    dW = (dZ @ A_prev.T) / m
+    db = np.sum(dZ, axis=1, keepdims=True) / m
+    dA_prev = W.T @ dZ
+    
+    # Update parameters inline
+    parameters[f'W{layer}'] -= config.learning_rate * dW
+    parameters[f'b{layer}'] -= config.learning_rate * db
+    
+    return cost, dA_prev</code></pre>
+
+            <p>No explicit cache. No separate backward pass function. The recursion naturally captures the forward pass values, and as we unwind, they're right there waiting for us. The call stack did the heavy lifting.</p>
+
+            <hr>
+
+            <h2>Why This Actually Matters</h2>
+
+            <p>You might be wondering: does it actually matter?</p>
+
+            <p>Let me be honest upfront:</p>
+
+            <blockquote>
+                <p><strong>For practical deep learning, no, not really.</strong></p>
+            </blockquote>
+
+            <p>PyTorch and TensorFlow will outperform this implementation in every meaningful way. They provide:</p>
+            <ul>
+                <li>GPU acceleration</li>
+                <li>Automatic differentiation</li>
+                <li>Highly optimized BLAS operations</li>
+                <li>Sophisticated memory management</li>
+                <li>Battle-tested numerical stability</li>
+            </ul>
+
+            <p>But here's what this exercise taught me:</p>
+
+            <h3>1. Backpropagation Is Just Structured Recursion</h3>
+
+            <p>Once you see backpropagation through this lens, it clicks differently. It's not a magical algorithm—it's the natural consequence of applying the chain rule recursively through a computation graph. The backward pass is just unwinding the recursion.</p>
+
+            <p>The elegance lies in the symmetry: the forward pass descends, and the backward pass ascends.</p>
+
+            <h3>2. Data Structures Often Hide Patterns</h3>
+
+            <p>The explicit cache made backpropagation feel like two separate algorithms. The recursive version reveals the underlying symmetry: it's one algorithm with two phases, naturally expressed through recursion's descent and ascent.</p>
+
+            <p>We were using data structures to simulate what the call stack already provides.</p>
+
+            <h3>3. Sometimes Less Code Is More Understanding</h3>
+
+            <p>The standard implementation was about 200 lines. The recursive version requires about 50 lines for the core logic.</p>
+
+            <p>More importantly, you can hold the entire algorithm in your head at once. No jumping between forward and backward functions. No cache management. Just the algorithm, expressed naturally.</p>
+
+            <hr>
+
+            <h2>The Detailed Mechanics</h2>
+
+            <p>Let me walk through exactly what's happening with a simple 2-layer network. Say we have input <code>X</code>, and layers <code>W1</code>, <code>W2</code>.</p>
+
+            <p>Watch how the call stack naturally provides exactly what we need:</p>
+
+            <p><strong>Going down (forward pass):</strong></p>
+            <pre><code class="language-text">Call 1: forward_and_backward(X, Y, params, config, layer=1)
+  - Compute Z1 = W1 @ X + b1
+  - Compute A1 = relu(Z1)
+  - Stack frame contains: X, W1, b1, Z1, A1
+  
+  Call 2: forward_and_backward(A1, Y, params, config, layer=2)
+    - Compute Z2 = W2 @ A1 + b2
+    - Compute A2 = sigmoid(Z2)
+    - Stack frame contains: A1, W2, b2, Z2, A2
+    
+    Call 3: forward_and_backward(A2, Y, params, config, layer=3)
+      - Base case! Compute cost and dA2
+      - Return (cost, dA2)</code></pre>
+
+            <p><strong>Coming back up (backward pass):</strong></p>
+            <pre><code class="language-text">    Call 2 resumes:
+      - Still has A1, W2, b2, Z2 in scope
+      - Computes dZ2, dW2, db2, dA1
+      - Updates W2, b2
+      - Returns (cost, dA1)
+  
+  Call 1 resumes:
+    - Still has X, W1, b1, Z1 in scope
+    - Computes dZ1, dW1, db1, dX
+    - Updates W1, b1
+    - Returns (cost, dX)</code></pre>
+
+            <p>The call stack gave us exactly what we needed, exactly when we needed it. <strong>No explicit caching required.</strong></p>
+
+            <hr>
+
+            <h2>Performance: The Awkward Truth</h2>
+
+            <p>I ran benchmarks comparing this to the standard implementation. On a simple binary classification task with 1,372 samples:</p>
+
+            <pre><code class="language-text">Standard implementation:  2.1s ± 100ms
+Recursive implementation: 2.2s ± 95ms</code></pre>
+
+            <p>Memory usage is virtually identical. Accuracy matches to within floating point error.</p>
+
+            <p>So no, this isn't a performance win. Python's recursion has overhead. The stack depth is limited. For large networks, you'd hit recursion limits.</p>
+
+            <p>But that's not the point.</p>
+
+            <p>This isn't about building a faster neural network. It's about understanding how they work.</p>
+
+            <hr>
+
+            <h2>What I Actually Learned</h2>
+
+            <p>This exercise crystallized something for me about learning:</p>
+
+            <blockquote>
+                <p><strong>Understanding comes from seeing the same thing from multiple angles.</strong></p>
+            </blockquote>
+
+            <p>I "understood" backpropagation after Ng's course. I could implement it, debug it, explain it. But rewriting it recursively gave me a different kind of understanding—a structural understanding of why backpropagation works the way it does.</p>
+
+            <p>It's like the difference between knowing how to drive a car versus understanding how the engine works. Both are valuable, but they're different kinds of knowledge.</p>
+
+            <p>The recursive implementation didn't teach me new facts. It gave me a new perspective on facts I already knew.</p>
+
+            <hr>
+
+            <h2>The Bigger Picture</h2>
+
+            <p>Modern deep learning has abstracted away almost everything. You write:</p>
+
+            <pre><code class="language-python">loss = criterion(outputs, targets)
+loss.backward()  # Magic happens here
+optimizer.step()</code></pre>
+
+            <p>PyTorch handles all the complexity. This is good. You should use these tools. They're fast, correct, and let you focus on architecture and experiments.</p>
+
+            <p>But there's value in occasionally popping the hood. Not to build a better engine—you won't—but to understand what's happening when things go wrong: when gradients vanish, when training diverges, when your intuition says something should work but it doesn't.</p>
+
+            <blockquote>
+                <p>Understanding the fundamentals doesn't make you a better framework user. It makes you a better problem solver.</p>
+            </blockquote>
+
+            <hr>
+
+            <h2>Closing Thoughts</h2>
+
+            <p>Is the recursive approach better? No.</p>
+
+            <p>Is it useful for production? Definitely not.</p>
+
+            <p>Did it teach me something valuable? Absolutely.</p>
+
+            <p>Sometimes the point of implementing something from scratch isn't to produce better code. It's to produce a better understanding. This recursive implementation didn't make me a better deep learning engineer, but it made me a more thoughtful one.</p>
+
+            <p>And in the end, that might be more valuable.</p>
+
+            <hr>
+
+            <p>Also, <a href="https://karpathy.medium.com/yes-you-should-understand-backprop-e2f06eab496b">yes you should understand backprop (Karpathy)</a>.</p>
+
+            <hr>
+
+            <div class="resources">
+                <h2>Resources</h2>
+
+                <p>The full implementation is available <a href="https://github.com/makasimba/Optimization-With-Recursion">on GitHub</a>. It includes the recursive implementation with proper type hints, a toy dataset, comparison benchmarks, a simple binary classification example, and tests verifying gradient correctness.</p>
+
+                <p><strong>Further Reading:</strong></p>
+                <ul>
+                    <li><a href="https://www.youtube.com/watch?v=tIeHLnjs5U8">Backpropagation calculus (3Blue1Brown)</a> — Visual intuition for the math</li>
+                    <li><a href="https://karpathy.medium.com/yes-you-should-understand-backprop-e2f06eab496b">Yes you should understand backprop (Karpathy)</a> — Why understanding matters</li>
+                    <li><a href="https://community.deeplearning.ai/t/neural-network-optimization-with-recursion/264465">Original DL.AI post</a> — Where this idea first took shape</li>
+                </ul>
+            </div>
+
+            <hr>
+
+            <div class="footer">
+                <p>Thanks for reading. If you found this interesting, you might also like my posts on <a href="https://makasimba.github.io/">Github</a>. Feel free to reach out on <a href="https://www.linkedin.com/in/makasimba/">LinkedIn</a> or <a href="https://x.com/__Makaa">X</a> if you have thoughts or questions.</p>
+            </div>
+        </article>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+</body>
+</html>
